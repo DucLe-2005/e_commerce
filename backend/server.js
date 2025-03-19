@@ -1,14 +1,15 @@
-import express from "express";
+import express, { application } from "express";
 import cors from "cors";
 import "dotenv/config";
 import connectDb from "./config/mongodb.js";
 import connectCloudinary from "./config/cloudinary.js";
 import userRouter from "./routes/userRoute.js";
+import productRouter from "./routes/productRoutes.js";
 
 // App Config
 const app = express();
 const port = process.env.port || 4000;
-connectDb()
+connectDb();
 connectCloudinary();
 
 // Middlewares
@@ -16,7 +17,8 @@ app.use(express.json());
 app.use(cors()); // front end can connect to backend from any ip
 
 // Api endpoints
-app.use('/api/user', userRouter);
+app.use("/api/user", userRouter);
+app.use("/api/product", productRouter);
 
 app.get("/", (req, res) => {
 	res.send("API Working");
